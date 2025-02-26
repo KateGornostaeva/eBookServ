@@ -1,8 +1,6 @@
 package ru.kate.ebook.ebookserv.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.UUID;
@@ -14,7 +12,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "books")
-public class Book {
+public class BookEntity {
 
     @Id
     private UUID id;
@@ -23,5 +21,13 @@ public class Book {
     private String author;
     private String isbn;
     private String publisher;
+    private Boolean isTestIn;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private UserEntity owner;
+
+    private String originalFileName;
+    private String storedFileName;
 
 }
