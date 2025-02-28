@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import ru.kate.ebook.ebookserv.security.AuthenticationService;
 import ru.kate.ebook.ebookserv.security.JwtAuthenticationResponse;
 import ru.kate.ebook.ebookserv.security.SignInRequestDto;
+import ru.kate.ebook.ebookserv.security.SignUpRequestDto;
 
 @RestController
 @RequestMapping("/auth")
@@ -19,11 +20,11 @@ import ru.kate.ebook.ebookserv.security.SignInRequestDto;
 public class AuthController {
     private final AuthenticationService authenticationService;
 
-    /*@Operation(summary = "Регистрация пользователя")
+    @Operation(summary = "Регистрация пользователя")
     @PostMapping("/sign-up")
     public JwtAuthenticationResponse signUp(@RequestBody @Valid SignUpRequestDto request) {
         return authenticationService.signUp(request);
-    }*/
+    }
 
     @Operation(summary = "Авторизация пользователя")
     @PostMapping("/sign-in")
