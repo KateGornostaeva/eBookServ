@@ -15,19 +15,20 @@ import java.util.UUID;
 public class BookEntity {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     private String title;
     private String author;
-    private String isbn;
-    private String publisher;
+    private String description;
+
+    @Column(name = "is_test_in")
     private Boolean isTestIn;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
     private UserEntity owner;
 
-    private String originalFileName;
     private String storedFileName;
 
 }

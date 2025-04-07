@@ -3,9 +3,8 @@ package ru.kate.ebook.ebookserv.services;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Files;
@@ -33,11 +32,12 @@ public class FileService {
      *
      * @param file MultipartFile to be saved
      */
-    public void saveFile(MultipartFile file) {
-        String fileName = StringUtils.cleanPath(file.getOriginalFilename());
+    public Path saveFile(File file) {
+        String fileName = file.getName();
         try {
             Path targetLocation = this.fileStorageLocation.resolve(fileName);
-            Files.copy(file.getInputStream(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            Files.copy(file.toPath(), targetLocation, StandardCopyOption.REPLACE_EXISTING);
+            return targetLocation;
         } catch (IOException ex) {
             throw new RuntimeException("Could not store file " + fileName + ". Please try again!", ex);
         }

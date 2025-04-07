@@ -13,7 +13,7 @@ public class SignUpRequestDto {
     @Schema(description = "Имя пользователя", example = "Jon")
     @Size(min = 5, max = 50, message = "Имя пользователя должно содержать от 5 до 50 символов")
     @NotBlank(message = "Имя пользователя не может быть пустыми")
-    private String username;
+    private String login;
 
     @Schema(description = "Адрес электронной почты", example = "jondoe@gmail.com")
     @Size(min = 5, max = 255, message = "Адрес электронной почты должен содержать от 5 до 255 символов")
@@ -24,4 +24,9 @@ public class SignUpRequestDto {
     @Schema(description = "Пароль", example = "my_1secret1_password")
     @Size(max = 255, message = "Длина пароля должна быть не более 255 символов")
     private String password;
+
+    private String lastName;
+    private String name;
+    private String middleName;
+    private String role;
 }

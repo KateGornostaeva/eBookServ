@@ -9,8 +9,7 @@ public class BookDto {
     private UUID id;
     private String title;
     private String author;
-    private String isbn;
-    private String publisher;
     private Boolean isTestIn;
-    private String originalFileName;
+    private String description;
+    private byte[] imageB64;
 }

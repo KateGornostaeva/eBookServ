@@ -27,10 +27,13 @@ public class AuthenticationService {
     public JwtAuthenticationResponse signUp(SignUpRequestDto request) {
 
         var user = UserEntity.builder()
-                .username(request.getUsername())
+                .username(request.getLogin())
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(Role.ROLE_STUDENT)
+                .role(Role.valueOf(request.getRole()))
+                .name(request.getName())
+                .lastName(request.getLastName())
+                .middleName(request.getMiddleName())
                 .build();
 
         userService.create(user);
