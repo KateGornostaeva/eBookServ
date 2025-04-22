@@ -40,7 +40,7 @@ public class BooksController {
     }
 
     @PostMapping(value = "/addBook", consumes = MediaType.APPLICATION_OCTET_STREAM_VALUE)
-    public ResponseEntity<UUID> addBook(HttpServletRequest request) throws IOException {
+    public ResponseEntity<String> addBook(HttpServletRequest request) throws IOException {
         UserEntity currentUser = userService.getCurrentUser();
         if (currentUser.getRole().equals(Role.ROLE_TEACHER)) {
             Path tempFilePath = Paths.get(System.getProperty("java.io.tmpdir") + File.separator + UUID.randomUUID() + ".zip");

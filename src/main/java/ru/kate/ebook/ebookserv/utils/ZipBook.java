@@ -37,6 +37,7 @@ public class ZipBook {
                     bookMeta.setTitle(rawMeta.getTitle());
                     bookMeta.setBookFileName(rawMeta.getBookFileName());
                     bookMeta.setIsTestIn(rawMeta.getIsTestIn());
+                    bookMeta.setDescription(rawMeta.getDescription());
                 }
             }
         }

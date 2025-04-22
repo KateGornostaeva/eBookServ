@@ -21,6 +21,7 @@ public class BookEntity {
     private String title;
     private String author;
     private String description;
+    private String code;
 
     @Column(name = "is_test_in")
     private Boolean isTestIn;

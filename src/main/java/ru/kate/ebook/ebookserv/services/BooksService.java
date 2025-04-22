@@ -26,7 +26,7 @@ public class BooksService {
     private final BookRepository bookRepository;
     private final FileService fileService;
 
-    public Optional<UUID> addBook(File file, UserEntity currentUser) throws IOException {
+    public Optional<String> addBook(File file, UserEntity currentUser) throws IOException {
         BookEntity bookEntity = new BookEntity();
         BookMeta bookMeta = ZipBook.getBookMeta(file);
         bookEntity.setTitle(bookMeta.getTitle());
@@ -35,8 +35,9 @@ public class BooksService {
         bookEntity.setIsTestIn(bookMeta.getIsTestIn());
         bookEntity.setOwner(currentUser);
         bookEntity.setStoredFileName(fileService.saveFile(file).toString());
+        bookEntity.setCode(getRandomNumber());
         bookRepository.save(bookEntity);
-        return Optional.of(bookEntity.getId());
+        return Optional.of(bookEntity.getCode());
     }
 
 
@@ -46,24 +47,22 @@ public class BooksService {
     }
 
     public Page<BookDto> getList(Pageable pageable) {
-        Base64.Encoder encoder = Base64.getEncoder();
         Page<BookEntity> entities = bookRepository.findAll(pageable);
         List<BookDto> dtos = new ArrayList<>();
         entities.forEach(entity -> {
-            BookDto dto = new BookDto();
-            dto.setId(entity.getId());
-            dto.setTitle(entity.getTitle());
-            dto.setAuthor(entity.getAuthor());
-            dto.setDescription(entity.getDescription());
-            dto.setIsTestIn(entity.getIsTestIn());
-            try {
-                byte[] encodedBytes = encoder.encode(ZipBook.getCover(new File(entity.getStoredFileName())));
-                dto.setImageB64(encodedBytes);
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-            dtos.add(dto);
+            dtos.add(new BookDto(entity));
         });
         return new PageImpl<>(dtos, pageable, dtos.size());
+    }
+
+    private String getRandomNumber() {
+        // Создаем объект Random для генерации случайных чисел
+        Random rnd = new Random();
+
+        // Генерируем случайное число от 0 до 999999
+        int number = rnd.nextInt(999999);
+
+        // Форматируем число до 6 цифр, добавляя нули в начало при необходимости
+        return String.format("%06d", number);
     }
 }

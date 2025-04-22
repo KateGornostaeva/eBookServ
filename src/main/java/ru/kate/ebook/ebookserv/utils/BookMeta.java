@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.UUID;
 
 @Data
 public class BookMeta {
@@ -16,6 +17,9 @@ public class BookMeta {
     public final static String COVER_NAME = "cover.png";
     public final static String TEST_NAME = "test.json";
     private final static ObjectMapper mapper = new ObjectMapper();
+
+    @JsonIgnore
+    private UUID id;
 
     //название учебника
     private String title;
