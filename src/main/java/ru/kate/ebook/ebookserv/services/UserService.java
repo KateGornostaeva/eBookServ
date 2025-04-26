@@ -6,9 +6,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import ru.kate.ebook.ebookserv.controllers.dtos.ProfileDto;
 import ru.kate.ebook.ebookserv.entity.UserEntity;
 import ru.kate.ebook.ebookserv.repository.UserRepository;
 import ru.kate.ebook.ebookserv.security.Role;
+
+import java.util.UUID;
 
 @Slf4j
 @Service
@@ -85,5 +88,18 @@ public class UserService {
         var user = getCurrentUser();
         user.setRole(Role.ROLE_ADMIN);
         save(user);
+    }
+
+    public ProfileDto getProfile(UUID id) {
+        ProfileDto profileDto = new ProfileDto();
+        repository.findById(id).ifPresent(user -> {
+            profileDto.setUsername(user.getUsername());
+            profileDto.setEmail(user.getEmail());
+            profileDto.setRole(user.getRole());
+            profileDto.setName(user.getName());
+            profileDto.setMiddleName(user.getMiddleName());
+            profileDto.setLastName(user.getLastName());
+        });
+        return profileDto;
     }
 }
