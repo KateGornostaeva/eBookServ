@@ -8,5 +8,5 @@ import java.util.UUID;
 
 public interface BookRepository extends JpaRepository<BookEntity, UUID> {
 
-    public List<BookEntity> findByDescriptionContainingOrCodeContainingIgnoreCase(String description, String code);
+    public List<BookEntity> findByDescriptionContainingIgnoreCaseOrCodeContainingIgnoreCaseOrTitleContainingIgnoreCase(String description, String code, String title);
 }

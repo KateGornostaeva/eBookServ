@@ -20,7 +20,7 @@ public class SearchService {
 
     public Optional<List<BookDto>> search(String query) {
         List<BookDto> dtos = new ArrayList<>();
-        List<BookEntity> bookEntities = bookRepository.findByDescriptionContainingOrCodeContainingIgnoreCase(query, query);
+        List<BookEntity> bookEntities = bookRepository.findByDescriptionContainingIgnoreCaseOrCodeContainingIgnoreCaseOrTitleContainingIgnoreCase(query, query, query);
         for (BookEntity bookEntity : bookEntities) {
             dtos.add(new BookDto(bookEntity));
         }
