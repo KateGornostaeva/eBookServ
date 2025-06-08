@@ -26,6 +26,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * Отвечает за передачу данных связанных с книгами
+ */
 @RestController
 @RequestMapping("/books")
 @RequiredArgsConstructor
@@ -34,15 +37,28 @@ public class BooksController {
     private final BooksService booksService;
     private final UserService userService;
 
+    /**
+     * отдать список книг всем пользователям
+     *
+     * @param page
+     * @param size
+     * @return
+     */
     @GetMapping("/list")
     public ResponseEntity<Page<BookDto>> list(@RequestParam Integer page, @RequestParam Integer size) {
         return ResponseEntity.of(Optional.ofNullable(booksService.getList(PageRequest.of(page, size))));
     }
 
+    /**
+     * сохраняет книгу на сервере, нужна авторизация и только для учителя
+     * @param request
+     * @return
+     * @throws IOException
+     */
     @PostMapping(value = "/addBook", consumes = MediaType.APPLICATION_OCTET_STREAM_VALUE)
     public ResponseEntity<String> addBook(HttpServletRequest request) throws IOException {
-        UserEntity currentUser = userService.getCurrentUser();
-        if (currentUser.getRole().equals(Role.ROLE_TEACHER)) {
+        UserEntity currentUser = userService.getCurrentUser(); // получаем текущего пользователя из контекста
+        if (currentUser.getRole().equals(Role.ROLE_TEACHER)) { // проверяем роль текущего пользователя
             Path tempFilePath = Paths.get(System.getProperty("java.io.tmpdir") + File.separator + UUID.randomUUID() + ".zip");
             Files.copy(request.getInputStream(), tempFilePath, StandardCopyOption.REPLACE_EXISTING);
             return ResponseEntity.of(booksService.addBook(tempFilePath.toFile(), currentUser));
@@ -51,6 +67,11 @@ public class BooksController {
         }
     }
 
+    /**
+     * скачать книгу, только учитель и студент
+     * @param id
+     * @return
+     */
     @GetMapping("/getBook")
     public ResponseEntity<Resource> getBook(@RequestParam("id") UUID id) {
         UserEntity currentUser = userService.getCurrentUser();

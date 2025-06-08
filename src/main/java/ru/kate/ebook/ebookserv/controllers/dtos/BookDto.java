@@ -10,6 +10,9 @@ import java.io.IOException;
 import java.util.Base64;
 import java.util.UUID;
 
+/**
+ * Dto для отправки в приложение
+ */
 @Data
 @NoArgsConstructor
 public class BookDto {
@@ -24,6 +27,11 @@ public class BookDto {
     private String code;
     private byte[] imageB64;
 
+    /**
+     * Создание dto из entity
+     *
+     * @param entity
+     */
     public BookDto(BookEntity entity) {
         id = entity.getId();
         title = entity.getTitle();

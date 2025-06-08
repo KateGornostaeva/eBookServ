@@ -13,6 +13,10 @@ import ru.kate.ebook.ebookserv.security.JwtAuthenticationResponse;
 import ru.kate.ebook.ebookserv.security.SignInRequestDto;
 import ru.kate.ebook.ebookserv.security.SignUpRequestDto;
 
+/**
+ * Контроллер отвечающий на запросы приложения
+ * для авторизации и регистрации
+ */
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor

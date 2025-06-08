@@ -3,6 +3,9 @@ package ru.kate.ebook.ebookserv.controllers.dtos;
 import lombok.Data;
 import ru.kate.ebook.ebookserv.security.Role;
 
+/**
+ * Профиль пользователя отправляемый в приложение
+ */
 @Data
 public class ProfileDto {
     private String username;
